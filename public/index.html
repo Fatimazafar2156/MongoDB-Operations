@@ -3,14 +3,14 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>MongoDB Operations UI</title>
+  <title>Assignment 2</title>
   <link rel="stylesheet" href="style.css">
   
 </head>
 <body>
   <div class="container">
     <header>
-      <h1>MongoDB Operations UI</h1>
+      <h1>User Dashboard</h1>
       <nav class="tabs">
         <button class="tab-btn active" data-tab="insert">Insert</button>
         <button class="tab-btn" data-tab="find">Find</button>
@@ -45,11 +45,7 @@
               <input type="text" id="insertCity" placeholder="New York">
             </div>
             
-            <div class="advanced-toggle" id="insertOneAdvancedToggle">+ Add more fields</div>
-            <div class="advanced-fields" id="insertOneAdvancedFields">
-              <div class="dynamic-fields" id="insertOneDynamicFields"></div>
-              <button type="button" class="add-field-btn" id="insertOneAddField">Add Field</button>
-            </div>
+           
             
             <button type="submit" class="btn">Insert One</button>
           </form>
@@ -122,40 +118,38 @@
               </div>
             </div>
 
-            <div class="advanced-toggle" id="findAdvancedToggle">+ Advanced options</div>
             <div class="advanced-fields" id="findAdvancedFields">
               <div class="form-row">
-                <div class="form-group">
-                  <label for="findLimit">Limit Results:</label>
-                  <input type="number" id="findLimit" placeholder="5" min="1">
-                </div>
-                <div class="form-group">
-                  <label for="findSkip">Skip Results:</label>
-                  <input type="number" id="findSkip" placeholder="0" min="0">
-                </div>
+              <div class="form-group">
+                <label for="findLimit">Limit Results:</label>
+                <input type="number" id="findLimit" placeholder="5" min="1">
+              </div>
+              <div class="form-group">
+                <label for="findSkip">Skip Results:</label>
+                <input type="number" id="findSkip" placeholder="0" min="0">
+              </div>
               </div>
               <div class="form-row">
-                <div class="form-group">
-                  <label for="findSortField">Sort Field:</label>
-                  <select id="findSortField">
-                    <option value="">None</option>
-                    <option value="name">Name</option>
-                    <option value="age">Age</option>
-                    <option value="city">City</option>
-                  </select>
-                </div>
-                <div class="form-group">
-                  <label for="findSortOrder">Sort Order:</label>
-                  <select id="findSortOrder">
-                    <option value="asc">Ascending</option>
-                    <option value="desc">Descending</option>
-                  </select>
-                </div>
+              <div class="form-group">
+                <label for="findSortField">Sort Field:</label>
+                <select id="findSortField">
+                <option value="">None</option>
+                <option value="name">Name</option>
+                <option value="age">Age</option>
+                <option value="city">City</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="findSortOrder">Sort Order:</label>
+                <select id="findSortOrder">
+                <option value="asc">Ascending</option>
+                <option value="desc">Descending</option>
+                </select>
+              </div>
               </div>
               <div class="dynamic-fields" id="findDynamicFields"></div>
               <button type="button" class="add-field-btn" id="findAddField">Add Custom Field</button>
             </div>
-            
             <button type="submit" class="btn">Find</button>
           </form>
           <div class="result" id="findResult"></div>
@@ -179,11 +173,7 @@
               <input type="text" id="findOneCity" placeholder="Optional">
             </div>
             
-            <div class="advanced-toggle" id="findOneAdvancedToggle">+ Add more fields</div>
-            <div class="advanced-fields" id="findOneAdvancedFields">
-              <div class="dynamic-fields" id="findOneDynamicFields"></div>
-              <button type="button" class="add-field-btn" id="findOneAddField">Add Field</button>
-            </div>
+          
             
             <button type="submit" class="btn">Find One</button>
           </form>
@@ -212,11 +202,7 @@
               <input type="text" id="updateOneFilterCity" placeholder="Optional">
             </div>
             
-            <div class="advanced-toggle" id="updateOneFilterAdvancedToggle">+ Add more filter fields</div>
-            <div class="advanced-fields" id="updateOneFilterAdvancedFields">
-              <div class="dynamic-fields" id="updateOneFilterDynamicFields"></div>
-              <button type="button" class="add-field-btn" id="updateOneFilterAddField">Add Field</button>
-            </div>
+           
             
             <h3 style="margin-top: 20px;">Update with:</h3>
             <div class="form-row">
@@ -234,11 +220,7 @@
               <input type="text" id="updateOneCity" placeholder="New city">
             </div>
             
-            <div class="advanced-toggle" id="updateOneAdvancedToggle">+ Add more update fields</div>
-            <div class="advanced-fields" id="updateOneAdvancedFields">
-              <div class="dynamic-fields" id="updateOneDynamicFields"></div>
-              <button type="button" class="add-field-btn" id="updateOneAddField">Add Field</button>
-            </div>
+           
             
             <button type="submit" class="btn">Update One</button>
           </form>
@@ -274,11 +256,6 @@
               <input type="number" id="updateManyFilterAgeMax" placeholder="Optional">
             </div>
             
-            <div class="advanced-toggle" id="updateManyFilterAdvancedToggle">+ Add more filter fields</div>
-            <div class="advanced-fields" id="updateManyFilterAdvancedFields">
-              <div class="dynamic-fields" id="updateManyFilterDynamicFields"></div>
-              <button type="button" class="add-field-btn" id="updateManyFilterAddField">Add Field</button>
-            </div>
             
             <h3 style="margin-top: 20px;">Update with:</h3>
             <div class="form-row">
@@ -296,12 +273,7 @@
               <input type="text" id="updateManyCity" placeholder="New city">
             </div>
             
-            <div class="advanced-toggle" id="updateManyAdvancedToggle">+ Add more update fields</div>
-            <div class="advanced-fields" id="updateManyAdvancedFields">
-              <div class="dynamic-fields" id="updateManyDynamicFields"></div>
-              <button type="button" class="add-field-btn" id="updateManyAddField">Add Field</button>
-            </div>
-            
+          
             <button type="submit" class="btn">Update Many</button>
           </form>
           <div class="result" id="updateManyResult"></div>
@@ -326,11 +298,7 @@
               <input type="text" id="replaceOneFilterCity" placeholder="Optional">
             </div>
             
-            <div class="advanced-toggle" id="replaceOneFilterAdvancedToggle">+ Add more filter fields</div>
-            <div class="advanced-fields" id="replaceOneFilterAdvancedFields">
-              <div class="dynamic-fields" id="replaceOneFilterDynamicFields"></div>
-              <button type="button" class="add-field-btn" id="replaceOneFilterAddField">Add Field</button>
-            </div>
+          
             
             <h3 style="margin-top: 20px;">Replace with:</h3>
             <div class="form-row">
@@ -348,11 +316,7 @@
               <input type="text" id="replaceOneCity" placeholder="New city">
             </div>
             
-            <div class="advanced-toggle" id="replaceOneAdvancedToggle">+ Add more fields</div>
-            <div class="advanced-fields" id="replaceOneAdvancedFields">
-              <div class="dynamic-fields" id="replaceOneDynamicFields"></div>
-              <button type="button" class="add-field-btn" id="replaceOneAddField">Add Field</button>
-            </div>
+           
             
             <button type="submit" class="btn">Replace One</button>
           </form>
@@ -380,12 +344,7 @@
               <input type="text" id="deleteOneCity" placeholder="Optional">
             </div>
             
-            <div class="advanced-toggle" id="deleteOneAdvancedToggle">+ Add more fields</div>
-            <div class="advanced-fields" id="deleteOneAdvancedFields">
-              <div class="dynamic-fields" id="deleteOneDynamicFields"></div>
-              <button type="button" class="add-field-btn" id="deleteOneAddField">Add Field</button>
-            </div>
-            
+           
             <button type="submit" class="btn">Delete One</button>
           </form>
           <div class="result" id="deleteOneResult"></div>
@@ -419,12 +378,7 @@
               <input type="number" id="deleteManyAgeMax" placeholder="Optional">
             </div>
             
-            <div class="advanced-toggle" id="deleteManyAdvancedToggle">+ Add more fields</div>
-            <div class="advanced-fields" id="deleteManyAdvancedFields">
-              <div class="dynamic-fields" id="deleteManyDynamicFields"></div>
-              <button type="button" class="add-field-btn" id="deleteManyAddField">Add Field</button>
-            </div>
-            
+          
             <button type="submit" class="btn">Delete Many</button>
           </form>
           <div class="result" id="deleteManyResult"></div>
@@ -461,11 +415,7 @@
               <input type="number" id="countAgeMax" placeholder="Optional">
             </div>
             
-            <div class="advanced-toggle" id="countAdvancedToggle">+ Add more fields</div>
-            <div class="advanced-fields" id="countAdvancedFields">
-              <div class="dynamic-fields" id="countDynamicFields"></div>
-              <button type="button" class="add-field-btn" id="countAddField">Add Field</button>
-            </div>
+        
             
             <button type="submit" class="btn">Count</button>
           </form>
@@ -510,11 +460,7 @@
                   <input type="text" id="findOneAndUpdateFilterCity" placeholder="Optional">
                 </div>
                 
-                <div class="advanced-toggle" id="findOneAndUpdateFilterAdvancedToggle">+ Add more filter fields</div>
-                <div class="advanced-fields" id="findOneAndUpdateFilterAdvancedFields">
-                  <div class="dynamic-fields" id="findOneAndUpdateFilterDynamicFields"></div>
-                  <button type="button" class="add-field-btn" id="findOneAndUpdateFilterAddField">Add Field</button>
-                </div>
+              
                 
                 <h3 style="margin-top: 20px;">Update with:</h3>
                 <div class="form-row">
@@ -532,11 +478,7 @@
                   <input type="text" id="findOneAndUpdateCity" placeholder="New city">
                 </div>
                 
-                <div class="advanced-toggle" id="findOneAndUpdateAdvancedToggle">+ Add more update fields</div>
-                <div class="advanced-fields" id="findOneAndUpdateAdvancedFields">
-                  <div class="dynamic-fields" id="findOneAndUpdateDynamicFields"></div>
-                  <button type="button" class="add-field-btn" id="findOneAndUpdateAddField">Add Field</button>
-                </div>
+             
                 
                 <button type="submit" class="btn">Find One and Update</button>
               </form>
@@ -561,11 +503,7 @@
                   <input type="text" id="findOneAndDeleteCity" placeholder="New York">
                 </div>
                 
-                <div class="advanced-toggle" id="findOneAndDeleteAdvancedToggle">+ Add more filter fields</div>
-                <div class="advanced-fields" id="findOneAndDeleteAdvancedFields">
-                  <div class="dynamic-fields" id="findOneAndDeleteDynamicFields"></div>
-                  <button type="button" class="add-field-btn" id="findOneAndDeleteAddField">Add Field</button>
-                </div>
+               
                 
                 <button type="submit" class="btn">Find One and Delete</button>
               </form>
@@ -589,11 +527,7 @@
                   <label for="findOneAndReplaceFilterCity">City:</label>
                   <input type="text" id="findOneAndReplaceFilterCity" placeholder="Optional">
                 </div>
-                <div class="advanced-toggle" id="findOneAndReplaceFilterAdvancedToggle">+ Add more filter fields</div>  
-                <div class="advanced-fields" id="findOneAndReplaceFilterAdvancedFields">
-                  <div class="dynamic-fields" id="findOneAndReplaceFilterDynamicFields"></div>
-                  <button type="button" class="add-field-btn" id="findOneAndReplaceFilterAddField">Add Field</button>
-                </div>
+                
                 <h3 style="margin-top: 20px;">Replace with:</h3>
                 <div class="form-row">
                   <div class="form-group">
@@ -609,11 +543,7 @@
                   <label for="findOneAndReplaceCity">City:</label>
                   <input type="text" id="findOneAndReplaceCity" placeholder="New city">
                 </div>
-                <div class="advanced-toggle" id="findOneAndReplaceAdvancedToggle">+ Add more update fields</div>
-                <div class="advanced-fields" id="findOneAndReplaceAdvancedFields">
-                  <div class="dynamic-fields" id="findOneAndReplaceDynamicFields"></div>
-                  <button type="button" class="add-field-btn" id="findOneAndReplaceAddField">Add Field</button>
-                </div>
+               
                 <button type="submit" class="btn">Find One and Replace</button>
               </form>
               <div class="result" id="findOneAndReplaceResult"></div>

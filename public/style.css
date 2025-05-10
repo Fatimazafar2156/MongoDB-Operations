@@ -1,19 +1,19 @@
 :root {
-    --primary-color: #4a6fa5;
-    --primary-hover: #3a5a8a;
-    --secondary-color: #6c757d;
-    --success-color: #28a745;
-    --danger-color: #dc3545;
-    --light-color: #f8f9fa;
-    --dark-color: #343a40;
-    --border-color: #dee2e6;
-    --bg-color: #f5f7fa;
-    --card-bg: #ffffff;
-    --text-color: #333;
-    --radius: 6px;
-    --spacing: 1rem;
-    --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-  }
+  --primary-color: #f4c2c2; /* Pastel pink */
+  --primary-hover: #e6b8b8; /* Slightly darker pastel pink */
+  --secondary-color: #e6e6fa; /* Lavender */
+  --success-color: #d8bfd8; /* Thistle (soft lavender) */
+  --danger-color: #ffb6c1; /* Light pastel pink */
+  --light-color: #fffafa; /* Snow (white with a hint of pink) */
+  --dark-color: #dda0dd; /* Plum (soft lavender) */
+  --border-color: #f0e6f6; /* Light lavender-gray */
+  --bg-color: #fff0f5; /* Lavender blush */
+  --card-bg: #ffffff; /* White */
+  --text-color: #555; /* Soft gray */
+  --radius: 6px;
+  --spacing: 1rem;
+  --shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
   
   * {
     box-sizing: border-box;
@@ -212,7 +212,7 @@
   }
 
   .advanced-fields {
-    display: none;
+    display: block !important; /* Ensure the fields are always visible */
     margin-top: 10px;
     padding-top: 10px;
     border-top: 1px dashed var(--border-color);
@@ -230,6 +230,7 @@
   }
 
   .dynamic-fields {
+    display: block !important; /* Ensure dynamic fields are always visible */
     margin-top: 10px;
   }
 

@@ -1,6 +1,6 @@
 document.addEventListener('DOMContentLoaded', () => {
     const API_URL = 'http://localhost:3000';
-    
+     
     // Tab handling
     const tabButtons = document.querySelectorAll('.tab-btn');
     const tabContents = document.querySelectorAll('.tab-content');
@@ -39,24 +39,7 @@ document.addEventListener('DOMContentLoaded', () => {
       }
     };
     
-    // Toggle advanced options
-    const setupAdvancedToggles = () => {
-      const toggles = document.querySelectorAll('.advanced-toggle');
-      toggles.forEach(toggle => {
-        toggle.addEventListener('click', () => {
-          const targetId = toggle.id.replace('Toggle', 'Fields');
-          const target = document.getElementById(targetId);
-          if (target.style.display === 'block') {
-            target.style.display = 'none';
-            toggle.textContent = '+ ' + toggle.textContent.substring(2);
-          } else {
-            target.style.display = 'block';
-            toggle.textContent = '- ' + toggle.textContent.substring(2);
-          }
-        });
-      });
-    };
-    setupAdvancedToggles();
+
     
     // Dynamic field handling
     const createDynamicField = (containerId) => {
