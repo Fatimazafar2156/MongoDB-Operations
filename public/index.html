@@ -1,0 +1,742 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MongoDB Operations UI</title>
+  <link rel="stylesheet" href="style.css">
+  
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>MongoDB Operations UI</h1>
+      <nav class="tabs">
+        <button class="tab-btn active" data-tab="insert">Insert</button>
+        <button class="tab-btn" data-tab="find">Find</button>
+        <button class="tab-btn" data-tab="update">Update</button>
+        <button class="tab-btn" data-tab="delete">Delete</button>
+        <button class="tab-btn" data-tab="other">Other Operations</button>
+        <button class="tab-btn" data-tab="advanced">Advanced</button>
+        <button class="tab-btn" data-tab="aggregation">Aggregation</button>
+        <button class="tab-btn" data-tab="indexes">Indexes</button>
+        <button class="tab-btn" data-tab="collection">Collection</button>
+      </nav>
+    </header>
+
+    <main>
+      <!-- Insert Tab -->
+      <section id="insert" class="tab-content active">
+        <div class="card">
+          <h2>Insert One Document</h2>
+          <form id="insertOneForm" class="form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="insertName">Name:</label>
+                <input type="text" id="insertName" placeholder="Alice">
+              </div>
+              <div class="form-group">
+                <label for="insertAge">Age:</label>
+                <input type="number" id="insertAge" placeholder="30">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="insertCity">City:</label>
+              <input type="text" id="insertCity" placeholder="New York">
+            </div>
+            
+            <div class="advanced-toggle" id="insertOneAdvancedToggle">+ Add more fields</div>
+            <div class="advanced-fields" id="insertOneAdvancedFields">
+              <div class="dynamic-fields" id="insertOneDynamicFields"></div>
+              <button type="button" class="add-field-btn" id="insertOneAddField">Add Field</button>
+            </div>
+            
+            <button type="submit" class="btn">Insert One</button>
+          </form>
+          <div class="result" id="insertOneResult"></div>
+        </div>
+
+        <div class="card">
+          <h2>Insert Many Documents</h2>
+          <form id="insertManyForm" class="form">
+            <p>Add multiple users at once:</p>
+            
+            <div id="insertManyContainer">
+              <!-- Template for a user -->
+              <div class="user-entry" style="border: 1px solid var(--border-color); padding: 15px; margin-bottom: 15px; border-radius: var(--radius);">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" class="insert-many-name" placeholder="User name">
+                  </div>
+                  <div class="form-group">
+                    <label>Age:</label>
+                    <input type="number" class="insert-many-age" placeholder="Age">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label>City:</label>
+                  <input type="text" class="insert-many-city" placeholder="City">
+                </div>
+                <button type="button" class="btn remove-user" style="background-color: var(--danger-color); margin-top: 10px;">Remove</button>
+              </div>
+            </div>
+            
+            <button type="button" id="addUserBtn" class="btn" style="background-color: var(--success-color); margin-bottom: 15px;">Add Another User</button>
+            <button type="submit" class="btn">Insert Many</button>
+          </form>
+          <div class="result" id="insertManyResult"></div>
+        </div>
+      </section>
+
+      <!-- Find Tab -->
+      <section id="find" class="tab-content">
+        <div class="card">
+          <h2>Find Documents</h2>
+          <form id="findForm" class="form">
+            <div class="form-group">
+              <label>Filter by:</label>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="findName">Name:</label>
+                  <input type="text" id="findName" placeholder="Optional">
+                </div>
+                <div class="form-group">
+                  <label for="findCity">City:</label>
+                  <input type="text" id="findCity" placeholder="Optional">
+                </div>
+              </div>
+            </div>
+            
+            <div class="form-group">
+              <label>Age Range:</label>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="findAgeMin">Minimum Age:</label>
+                  <input type="number" id="findAgeMin" placeholder="Optional">
+                </div>
+                <div class="form-group">
+                  <label for="findAgeMax">Maximum Age:</label>
+                  <input type="number" id="findAgeMax" placeholder="Optional">
+                </div>
+              </div>
+            </div>
+
+            <div class="advanced-toggle" id="findAdvancedToggle">+ Advanced options</div>
+            <div class="advanced-fields" id="findAdvancedFields">
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="findLimit">Limit Results:</label>
+                  <input type="number" id="findLimit" placeholder="5" min="1">
+                </div>
+                <div class="form-group">
+                  <label for="findSkip">Skip Results:</label>
+                  <input type="number" id="findSkip" placeholder="0" min="0">
+                </div>
+              </div>
+              <div class="form-row">
+                <div class="form-group">
+                  <label for="findSortField">Sort Field:</label>
+                  <select id="findSortField">
+                    <option value="">None</option>
+                    <option value="name">Name</option>
+                    <option value="age">Age</option>
+                    <option value="city">City</option>
+                  </select>
+                </div>
+                <div class="form-group">
+                  <label for="findSortOrder">Sort Order:</label>
+                  <select id="findSortOrder">
+                    <option value="asc">Ascending</option>
+                    <option value="desc">Descending</option>
+                  </select>
+                </div>
+              </div>
+              <div class="dynamic-fields" id="findDynamicFields"></div>
+              <button type="button" class="add-field-btn" id="findAddField">Add Custom Field</button>
+            </div>
+            
+            <button type="submit" class="btn">Find</button>
+          </form>
+          <div class="result" id="findResult"></div>
+        </div>
+
+        <div class="card">
+          <h2>Find One Document</h2>
+          <form id="findOneForm" class="form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="findOneName">Name:</label>
+                <input type="text" id="findOneName" placeholder="Alice">
+              </div>
+              <div class="form-group">
+                <label for="findOneAge">Age:</label>
+                <input type="number" id="findOneAge" placeholder="Optional">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="findOneCity">City:</label>
+              <input type="text" id="findOneCity" placeholder="Optional">
+            </div>
+            
+            <div class="advanced-toggle" id="findOneAdvancedToggle">+ Add more fields</div>
+            <div class="advanced-fields" id="findOneAdvancedFields">
+              <div class="dynamic-fields" id="findOneDynamicFields"></div>
+              <button type="button" class="add-field-btn" id="findOneAddField">Add Field</button>
+            </div>
+            
+            <button type="submit" class="btn">Find One</button>
+          </form>
+          <div class="result" id="findOneResult"></div>
+        </div>
+      </section>
+
+      <!-- Update Tab -->
+      <section id="update" class="tab-content">
+        <div class="card">
+          <h2>Update One Document</h2>
+          <form id="updateOneForm" class="form">
+            <h3>Find document by:</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="updateOneFilterName">Name:</label>
+                <input type="text" id="updateOneFilterName" placeholder="Alice">
+              </div>
+              <div class="form-group">
+                <label for="updateOneFilterAge">Age:</label>
+                <input type="number" id="updateOneFilterAge" placeholder="Optional">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="updateOneFilterCity">City:</label>
+              <input type="text" id="updateOneFilterCity" placeholder="Optional">
+            </div>
+            
+            <div class="advanced-toggle" id="updateOneFilterAdvancedToggle">+ Add more filter fields</div>
+            <div class="advanced-fields" id="updateOneFilterAdvancedFields">
+              <div class="dynamic-fields" id="updateOneFilterDynamicFields"></div>
+              <button type="button" class="add-field-btn" id="updateOneFilterAddField">Add Field</button>
+            </div>
+            
+            <h3 style="margin-top: 20px;">Update with:</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="updateOneName">Name:</label>
+                <input type="text" id="updateOneName" placeholder="New name">
+              </div>
+              <div class="form-group">
+                <label for="updateOneAge">Age:</label>
+                <input type="number" id="updateOneAge" placeholder="New age">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="updateOneCity">City:</label>
+              <input type="text" id="updateOneCity" placeholder="New city">
+            </div>
+            
+            <div class="advanced-toggle" id="updateOneAdvancedToggle">+ Add more update fields</div>
+            <div class="advanced-fields" id="updateOneAdvancedFields">
+              <div class="dynamic-fields" id="updateOneDynamicFields"></div>
+              <button type="button" class="add-field-btn" id="updateOneAddField">Add Field</button>
+            </div>
+            
+            <button type="submit" class="btn">Update One</button>
+          </form>
+          <div class="result" id="updateOneResult"></div>
+        </div>
+
+        <div class="card">
+          <h2>Update Many Documents</h2>
+          <form id="updateManyForm" class="form">
+            <h3>Find documents by:</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="updateManyFilterName">Name:</label>
+                <input type="text" id="updateManyFilterName" placeholder="Optional">
+              </div>
+              <div class="form-group">
+                <label for="updateManyFilterAge">Age:</label>
+                <input type="number" id="updateManyFilterAge" placeholder="Optional">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="updateManyFilterCity">City:</label>
+                <input type="text" id="updateManyFilterCity" placeholder="Optional">
+              </div>
+              <div class="form-group">
+                <label for="updateManyFilterAgeMin">Min Age:</label>
+                <input type="number" id="updateManyFilterAgeMin" placeholder="Optional">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="updateManyFilterAgeMax">Max Age:</label>
+              <input type="number" id="updateManyFilterAgeMax" placeholder="Optional">
+            </div>
+            
+            <div class="advanced-toggle" id="updateManyFilterAdvancedToggle">+ Add more filter fields</div>
+            <div class="advanced-fields" id="updateManyFilterAdvancedFields">
+              <div class="dynamic-fields" id="updateManyFilterDynamicFields"></div>
+              <button type="button" class="add-field-btn" id="updateManyFilterAddField">Add Field</button>
+            </div>
+            
+            <h3 style="margin-top: 20px;">Update with:</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="updateManyName">Name:</label>
+                <input type="text" id="updateManyName" placeholder="New name">
+              </div>
+              <div class="form-group">
+                <label for="updateManyAge">Age:</label>
+                <input type="number" id="updateManyAge" placeholder="New age">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="updateManyCity">City:</label>
+              <input type="text" id="updateManyCity" placeholder="New city">
+            </div>
+            
+            <div class="advanced-toggle" id="updateManyAdvancedToggle">+ Add more update fields</div>
+            <div class="advanced-fields" id="updateManyAdvancedFields">
+              <div class="dynamic-fields" id="updateManyDynamicFields"></div>
+              <button type="button" class="add-field-btn" id="updateManyAddField">Add Field</button>
+            </div>
+            
+            <button type="submit" class="btn">Update Many</button>
+          </form>
+          <div class="result" id="updateManyResult"></div>
+        </div>
+
+        <div class="card">
+          <h2>Replace One Document</h2>
+          <form id="replaceOneForm" class="form">
+            <h3>Find document by:</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="replaceOneFilterName">Name:</label>
+                <input type="text" id="replaceOneFilterName" placeholder="Alice">
+              </div>
+              <div class="form-group">
+                <label for="replaceOneFilterAge">Age:</label>
+                <input type="number" id="replaceOneFilterAge" placeholder="Optional">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="replaceOneFilterCity">City:</label>
+              <input type="text" id="replaceOneFilterCity" placeholder="Optional">
+            </div>
+            
+            <div class="advanced-toggle" id="replaceOneFilterAdvancedToggle">+ Add more filter fields</div>
+            <div class="advanced-fields" id="replaceOneFilterAdvancedFields">
+              <div class="dynamic-fields" id="replaceOneFilterDynamicFields"></div>
+              <button type="button" class="add-field-btn" id="replaceOneFilterAddField">Add Field</button>
+            </div>
+            
+            <h3 style="margin-top: 20px;">Replace with:</h3>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="replaceOneName">Name:</label>
+                <input type="text" id="replaceOneName" placeholder="New name">
+              </div>
+              <div class="form-group">
+                <label for="replaceOneAge">Age:</label>
+                <input type="number" id="replaceOneAge" placeholder="New age">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="replaceOneCity">City:</label>
+              <input type="text" id="replaceOneCity" placeholder="New city">
+            </div>
+            
+            <div class="advanced-toggle" id="replaceOneAdvancedToggle">+ Add more fields</div>
+            <div class="advanced-fields" id="replaceOneAdvancedFields">
+              <div class="dynamic-fields" id="replaceOneDynamicFields"></div>
+              <button type="button" class="add-field-btn" id="replaceOneAddField">Add Field</button>
+            </div>
+            
+            <button type="submit" class="btn">Replace One</button>
+          </form>
+          <div class="result" id="replaceOneResult"></div>
+        </div>
+      </section>
+
+      <!-- Delete Tab -->
+      <section id="delete" class="tab-content">
+        <div class="card">
+          <h2>Delete One Document</h2>
+          <form id="deleteOneForm" class="form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="deleteOneName">Name:</label>
+                <input type="text" id="deleteOneName" placeholder="Name to delete">
+              </div>
+              <div class="form-group">
+                <label for="deleteOneAge">Age:</label>
+                <input type="number" id="deleteOneAge" placeholder="Optional">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="deleteOneCity">City:</label>
+              <input type="text" id="deleteOneCity" placeholder="Optional">
+            </div>
+            
+            <div class="advanced-toggle" id="deleteOneAdvancedToggle">+ Add more fields</div>
+            <div class="advanced-fields" id="deleteOneAdvancedFields">
+              <div class="dynamic-fields" id="deleteOneDynamicFields"></div>
+              <button type="button" class="add-field-btn" id="deleteOneAddField">Add Field</button>
+            </div>
+            
+            <button type="submit" class="btn">Delete One</button>
+          </form>
+          <div class="result" id="deleteOneResult"></div>
+        </div>
+
+        <div class="card">
+          <h2>Delete Many Documents</h2>
+          <form id="deleteManyForm" class="form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="deleteManyName">Name:</label>
+                <input type="text" id="deleteManyName" placeholder="Optional">
+              </div>
+              <div class="form-group">
+                <label for="deleteManyCity">City:</label>
+                <input type="text" id="deleteManyCity" placeholder="Optional">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="deleteManyAge">Age:</label>
+                <input type="number" id="deleteManyAge" placeholder="Optional">
+              </div>
+              <div class="form-group">
+                <label for="deleteManyAgeMin">Min Age:</label>
+                <input type="number" id="deleteManyAgeMin" placeholder="Optional">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="deleteManyAgeMax">Max Age:</label>
+              <input type="number" id="deleteManyAgeMax" placeholder="Optional">
+            </div>
+            
+            <div class="advanced-toggle" id="deleteManyAdvancedToggle">+ Add more fields</div>
+            <div class="advanced-fields" id="deleteManyAdvancedFields">
+              <div class="dynamic-fields" id="deleteManyDynamicFields"></div>
+              <button type="button" class="add-field-btn" id="deleteManyAddField">Add Field</button>
+            </div>
+            
+            <button type="submit" class="btn">Delete Many</button>
+          </form>
+          <div class="result" id="deleteManyResult"></div>
+        </div>
+      </section>
+
+      <!-- Other Operations Tab -->
+      <section id="other" class="tab-content">
+        <div class="card">
+          <h2>Count Documents</h2>
+          <form id="countForm" class="form">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="countName">Name:</label>
+                <input type="text" id="countName" placeholder="Optional">
+              </div>
+              <div class="form-group">
+                <label for="countCity">City:</label>
+                <input type="text" id="countCity" placeholder="Optional">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="countAge">Age:</label>
+                <input type="number" id="countAge" placeholder="Optional">
+              </div>
+              <div class="form-group">
+                <label for="countAgeMin">Min Age:</label>
+                <input type="number" id="countAgeMin" placeholder="Optional">
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="countAgeMax">Max Age:</label>
+              <input type="number" id="countAgeMax" placeholder="Optional">
+            </div>
+            
+            <div class="advanced-toggle" id="countAdvancedToggle">+ Add more fields</div>
+            <div class="advanced-fields" id="countAdvancedFields">
+              <div class="dynamic-fields" id="countDynamicFields"></div>
+              <button type="button" class="add-field-btn" id="countAddField">Add Field</button>
+            </div>
+            
+            <button type="submit" class="btn">Count</button>
+          </form>
+          <div class="result" id="countResult"></div>
+        </div>
+
+        <div class="card">
+          <h2>Distinct Values</h2>
+          <form id="distinctForm" class="form">
+            <div class="form-group">
+              <label for="distinctField">Field:</label>
+              <select id="distinctField">
+                <option value="name">Name</option>
+                <option value="age">Age</option>
+                <option value="city">City</option>
+              </select>
+            </div>
+            <button type="submit" class="btn">Get Distinct</button>
+          </form>
+          <div class="result" id="distinctResult"></div>
+        </div>
+      </section>
+
+        <!-- Advanced Tab -->
+        <section id="advanced" class="tab-content">
+            <div class="card">
+              <h2>Find One and Update</h2>
+              <form id="findOneAndUpdateForm" class="form">
+                <h3>Find document by:</h3>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="findOneAndUpdateFilterName">Name:</label>
+                    <input type="text" id="findOneAndUpdateFilterName" placeholder="Alice">
+                  </div>
+                  <div class="form-group">
+                    <label for="findOneAndUpdateFilterAge">Age:</label>
+                    <input type="number" id="findOneAndUpdateFilterAge" placeholder="Optional">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="findOneAndUpdateFilterCity">City:</label>
+                  <input type="text" id="findOneAndUpdateFilterCity" placeholder="Optional">
+                </div>
+                
+                <div class="advanced-toggle" id="findOneAndUpdateFilterAdvancedToggle">+ Add more filter fields</div>
+                <div class="advanced-fields" id="findOneAndUpdateFilterAdvancedFields">
+                  <div class="dynamic-fields" id="findOneAndUpdateFilterDynamicFields"></div>
+                  <button type="button" class="add-field-btn" id="findOneAndUpdateFilterAddField">Add Field</button>
+                </div>
+                
+                <h3 style="margin-top: 20px;">Update with:</h3>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="findOneAndUpdateName">Name:</label>
+                    <input type="text" id="findOneAndUpdateName" placeholder="New name">
+                  </div>
+                  <div class="form-group">
+                    <label for="findOneAndUpdateAge">Age:</label>
+                    <input type="number" id="findOneAndUpdateAge" placeholder="New age">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="findOneAndUpdateCity">City:</label>
+                  <input type="text" id="findOneAndUpdateCity" placeholder="New city">
+                </div>
+                
+                <div class="advanced-toggle" id="findOneAndUpdateAdvancedToggle">+ Add more update fields</div>
+                <div class="advanced-fields" id="findOneAndUpdateAdvancedFields">
+                  <div class="dynamic-fields" id="findOneAndUpdateDynamicFields"></div>
+                  <button type="button" class="add-field-btn" id="findOneAndUpdateAddField">Add Field</button>
+                </div>
+                
+                <button type="submit" class="btn">Find One and Update</button>
+              </form>
+              <div class="result" id="findOneAndUpdateResult"></div>
+            </div>
+    
+            <div class="card">
+              <h2>Find One and Delete</h2>
+              <form id="findOneAndDeleteForm" class="form">
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="findOneAndDeleteName">Name:</label>
+                    <input type="text" id="findOneAndDeleteName" placeholder="Alice">
+                  </div>
+                  <div class="form-group">
+                    <label for="findOneAndDeleteAge">Age:</label>
+                    <input type="number" id="findOneAndDeleteAge" placeholder="Optional">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="findOneAndDeleteCity">City:</label>
+                  <input type="text" id="findOneAndDeleteCity" placeholder="New York">
+                </div>
+                
+                <div class="advanced-toggle" id="findOneAndDeleteAdvancedToggle">+ Add more filter fields</div>
+                <div class="advanced-fields" id="findOneAndDeleteAdvancedFields">
+                  <div class="dynamic-fields" id="findOneAndDeleteDynamicFields"></div>
+                  <button type="button" class="add-field-btn" id="findOneAndDeleteAddField">Add Field</button>
+                </div>
+                
+                <button type="submit" class="btn">Find One and Delete</button>
+              </form>
+              <div class="result" id="findOneAndDeleteResult"></div>
+            </div>
+            <div class="card">
+              <h2>Find One and Replace</h2>
+              <form id="findOneAndReplaceForm" class="form">
+                <h3>Find document by:</h3>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="findOneAndReplaceFilterName">Name:</label>
+                    <input type="text" id="findOneAndReplaceFilterName" placeholder="Alice">
+                  </div>
+                  <div class="form-group">
+                    <label for="findOneAndReplaceFilterAge">Age:</label>
+                    <input type="number" id="findOneAndReplaceFilterAge" placeholder="Optional">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="findOneAndReplaceFilterCity">City:</label>
+                  <input type="text" id="findOneAndReplaceFilterCity" placeholder="Optional">
+                </div>
+                <div class="advanced-toggle" id="findOneAndReplaceFilterAdvancedToggle">+ Add more filter fields</div>  
+                <div class="advanced-fields" id="findOneAndReplaceFilterAdvancedFields">
+                  <div class="dynamic-fields" id="findOneAndReplaceFilterDynamicFields"></div>
+                  <button type="button" class="add-field-btn" id="findOneAndReplaceFilterAddField">Add Field</button>
+                </div>
+                <h3 style="margin-top: 20px;">Replace with:</h3>
+                <div class="form-row">
+                  <div class="form-group">
+                    <label for="findOneAndReplaceName">Name:</label>
+                    <input type="text" id="findOneAndReplaceName" placeholder="New name">
+                  </div>
+                  <div class="form-group">
+                    <label for="findOneAndReplaceAge">Age:</label>
+                    <input type="number" id="findOneAndReplaceAge" placeholder="New age">
+                  </div>
+                </div>
+                <div class="form-group">
+                  <label for="findOneAndReplaceCity">City:</label>
+                  <input type="text" id="findOneAndReplaceCity" placeholder="New city">
+                </div>
+                <div class="advanced-toggle" id="findOneAndReplaceAdvancedToggle">+ Add more update fields</div>
+                <div class="advanced-fields" id="findOneAndReplaceAdvancedFields">
+                  <div class="dynamic-fields" id="findOneAndReplaceDynamicFields"></div>
+                  <button type="button" class="add-field-btn" id="findOneAndReplaceAddField">Add Field</button>
+                </div>
+                <button type="submit" class="btn">Find One and Replace</button>
+              </form>
+              <div class="result" id="findOneAndReplaceResult"></div>
+            </div>
+
+            <div class="card">
+                <h2>Bulk Write Operation</h2>
+                <form id="bulkWriteForm" class="form">
+                  <div class="form-group">
+                    <label for="bulkOperations">Bulk Operations (JSON Array):</label>
+                    <textarea id="bulkOperations" rows="8" placeholder='[{"insertOne": {"document": {"name": "Alice", "age": 25}}}]'></textarea>
+                  </div>
+                  <button type="submit" class="btn">Execute Bulk Write</button>
+                </form>
+                <div class="result" id="bulkWriteResult"></div>
+              </div>
+              
+        </section>
+        <!-- Aggregation Tab -->
+    <section id="aggregation" class="tab-content">
+        <div id="aggregation-section">
+            <h2>Aggregation</h2>
+            
+            <label for="pipeline">Enter Aggregation Pipeline (JSON Array):</label><br>
+            <textarea id="pipeline" rows="10" cols="60">
+          [
+            { "$match": { "age": { "$gte": 30 } } },
+            { "$group": { "_id": "$city", "count": { "$sum": 1 } } }
+          ]
+            </textarea><br><br>
+            
+            <button id="runAggregationBtn">Run Aggregation</button>
+            
+            <h3>Result:</h3>
+            <pre id="aggregation-result"></pre>
+          </div>
+        </section>
+        <!-- Indexes Tab -->
+        <section id="indexes" class="tab-content">
+            <div class="card">
+              <h2>Create Index</h2>
+              <form id="createIndexForm" class="form">
+                <div class="form-group">
+                  <label for="indexField">Field Name:</label>
+                  <input type="text" id="indexField" placeholder="email">
+                </div>
+                <div class="form-group">
+                  <label for="indexOrder">Order (1 for ascending, -1 for descending):</label>
+                  <input type="number" id="indexOrder" placeholder="1" value="1">
+                </div>
+                <div class="form-group">
+                  <label>
+                    <input type="checkbox" id="uniqueIndex">
+                    Unique
+                  </label>
+                </div>
+                <button type="submit" class="btn">Create Index</button>
+              </form>
+              <div class="result" id="createIndexResult"></div>
+            </div>
+          
+            <div class="card">
+              <h2>Drop Index</h2>
+              <form id="dropIndexForm" class="form">
+                <div class="form-group">
+                  <label for="indexNameToDrop">Index Name:</label>
+                  <input type="text" id="indexNameToDrop" placeholder="email_1">
+                </div>
+                <button type="submit" class="btn" style="background-color: var(--danger-color);">Drop Index</button>
+              </form>
+              <div class="result" id="dropIndexResult"></div>
+            </div>
+          
+            <div class="card">
+              <h2>List Indexes</h2>
+              <form id="listIndexesForm" class="form">
+                <button type="submit" class="btn">Get Indexes</button>
+              </form>
+              <div class="result" id="listIndexesResult"></div>
+            </div>
+          </section>
+        <!-- Collection Tab -->
+        <section id="collection" class="tab-content">
+            <div class="card">
+              <h2>List Collections</h2>
+              <form id="listCollectionsForm" class="form">
+                <button type="submit" class="btn">Get Collections</button>
+              </form>
+              <div class="result" id="listCollectionsResult"></div>
+            </div>
+          
+            <div class="card">
+              <h2>Drop Collection</h2>
+              <form id="dropCollectionForm" class="form">
+                <div class="form-group">
+                  <label for="collectionNameToDrop">Collection Name:</label>
+                  <input type="text" id="collectionNameToDrop" placeholder="users">
+                </div>
+                <button type="submit" class="btn" style="background-color: var(--danger-color);">Drop Collection</button>
+              </form>
+              <div class="result" id="dropCollectionResult"></div>
+            </div>
+            
+            <div class="card">
+              <h2>Rename Collection</h2>
+              <form id="renameCollectionForm" class="form">
+                <div class="form-group">
+                  <label for="oldCollectionName">Old Collection Name:</label>
+                  <input type="text" id="oldCollectionName" placeholder="users">
+                </div>
+                <div class="form-group">
+                  <label for="newCollectionName">New Collection Name:</label>
+                  <input type="text" id="newCollectionName" placeholder="new_users">
+                </div>
+                <button type="submit" class="btn">Rename Collection</button>
+              </form>
+              <div class="result" id="renameCollectionResult"></div>
+            </div>
+          </section>
+          
+    </main>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
