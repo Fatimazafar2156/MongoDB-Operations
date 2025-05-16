@@ -397,12 +397,13 @@ app.post('/findOneAndDelete', async (req, res) => {
 app.post('/bulkWrite', async (req, res) => {
   try {
     const { operations } = req.body;
-    
     if (!Array.isArray(operations) || operations.length === 0) {
       return res.status(400).json({ error: 'Operations array is required' });
     }
-    
+
+    const collection = await getCollection();
     const result = await collection.bulkWrite(operations);
+
     res.json({
       acknowledged: result.acknowledged,
       insertedCount: result.insertedCount,
@@ -413,11 +414,10 @@ app.post('/bulkWrite', async (req, res) => {
       upsertedIds: result.upsertedIds
     });
   } catch (error) {
-    console.error('Error performing bulk write operations:', error);
+    console.error('Bulk write error:', error);
     res.status(500).json({ error: error.message });
   }
 });
-
 // Find one and replace
 app.post('/findOneAndReplace', async (req, res) => {
   try {

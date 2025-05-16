@@ -1191,41 +1191,45 @@ document.getElementById('renameCollectionForm').addEventListener('submit', async
 });
 
 //bulkWriteForm
-document.getElementById('bulkWriteForm').addEventListener('submit', async (e) => {
+document.addEventListener('DOMContentLoaded', () => {
+  const form = document.getElementById('bulkWriteForm');
+  const textarea = document.getElementById('bulkOperations');
+  const resultDiv = document.getElementById('bulkWriteResult');
+
+  form.addEventListener('submit', async (e) => {
     e.preventDefault();
-  
-    const textarea = document.getElementById('bulkOperations');
+
     let operations;
-  
     try {
       operations = JSON.parse(textarea.value.trim());
+      if (!Array.isArray(operations) || operations.length === 0) {
+        throw new Error('Please enter a valid, non-empty JSON array.');
+      }
     } catch (err) {
-      document.getElementById('bulkWriteResult').innerHTML = `<p style="color:red;">Invalid JSON format</p>`;
+      resultDiv.innerHTML = `<p style="color:red;">Invalid JSON: ${err.message}</p>`;
       return;
     }
-  
+
     try {
       const res = await fetch('/bulkWrite', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ operations })
       });
-  
-      const result = await res.json();
-  
+
+      const data = await res.json();
+
       if (res.ok) {
-        document.getElementById('bulkWriteResult').innerHTML = `
-          <pre>${JSON.stringify(result, null, 2)}</pre>
-        `;
+        resultDiv.innerHTML = `<pre>${JSON.stringify(data, null, 2)}</pre>`;
       } else {
-        document.getElementById('bulkWriteResult').innerHTML = `<p style="color:red;">${result.error}</p>`;
+        resultDiv.innerHTML = `<p style="color:red;">${data.error}</p>`;
       }
     } catch (err) {
-      document.getElementById('bulkWriteResult').innerHTML = `<p style="color:red;">${err.message}</p>`;
+      resultDiv.innerHTML = `<p style="color:red;">Network error: ${err.message}</p>`;
     }
   });
+});
+
   
 
       // Initialize dynamic fields and advanced toggles
