@@ -563,24 +563,23 @@
               
         </section>
         <!-- Aggregation Tab -->
-    <section id="aggregation" class="tab-content">
-        <div id="aggregation-section">
-            <h2>Aggregation</h2>
-            
-            <label for="pipeline">Enter Aggregation Pipeline (JSON Array):</label><br>
-            <textarea id="pipeline" rows="10" cols="60">
-          [
-            { "$match": { "age": { "$gte": 30 } } },
-            { "$group": { "_id": "$city", "count": { "$sum": 1 } } }
-          ]
-            </textarea><br><br>
-            
-            <button id="runAggregationBtn">Run Aggregation</button>
-            
-            <h3>Result:</h3>
-            <pre id="aggregation-result"></pre>
-          </div>
-        </section>
+  <section id="aggregation" class="tab-content">
+  <div id="aggregation-section">
+    <h2>Aggregation</h2>
+
+    <label for="pipeline">Enter Aggregation Pipeline (JSON Array):</label><br>
+    <textarea id="pipeline" rows="10" cols="60">[
+  { "$match": { "age": { "$gte": 30 } } },
+  { "$group": { "_id": "$city", "count": { "$sum": 1 } } }
+]</textarea><br><br>
+
+    <button id="runAggregationBtn">Run Aggregation</button>
+
+    <h3>Result:</h3>
+    <pre id="aggregation-result" class="result-box"></pre>
+  </div>
+</section>
+
         <!-- Indexes Tab -->
         <section id="indexes" class="tab-content">
             <div class="card">
@@ -617,23 +616,26 @@
               <div class="result" id="dropIndexResult"></div>
             </div>
           
-            <div class="card">
-              <h2>List Indexes</h2>
-              <form id="listIndexesForm" class="form">
-                <button type="submit" class="btn">Get Indexes</button>
-              </form>
-              <div class="result" id="listIndexesResult"></div>
-            </div>
+         <div class="card">
+  <h2>List Indexes</h2>
+  <form id="listIndexesForm" class="form">
+    <label for="indexCollection">Collection Name:</label>
+    <input type="text" id="indexCollection" required placeholder="e.g. users" />
+    <button type="submit" class="btn">Get Indexes</button>
+  </form>
+  <div class="result-box" id="listIndexesResult"></div>
+</div>
+
           </section>
         <!-- Collection Tab -->
         <section id="collection" class="tab-content">
-            <div class="card">
-              <h2>List Collections</h2>
-              <form id="listCollectionsForm" class="form">
-                <button type="submit" class="btn">Get Collections</button>
-              </form>
-              <div class="result" id="listCollectionsResult"></div>
-            </div>
+  <div class="card">
+    <h2>List Collections</h2>
+    <form id="listCollectionsForm" class="form">
+      <button type="submit" class="btn">Get Collections</button>
+    </form>
+    <div class="result-box" id="listCollectionsResult"></div>
+  </div>
           
             <div class="card">
               <h2>Drop Collection</h2>

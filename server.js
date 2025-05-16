@@ -333,16 +333,24 @@ app.post('/dropIndex', async (req, res) => {
   }
 });
 
-// Get all indexes
+
+// GET /getIndexes?collectionName=users
 app.get('/getIndexes', async (req, res) => {
   try {
-    const indexes = await collection.indexes();
+    const { collectionName } = req.query;
+
+    if (!collectionName) {
+      return res.status(400).json({ error: 'Collection name is required' });
+    }
+
+    const indexes = await db.collection(collectionName).indexes();
     res.json(indexes);
   } catch (error) {
     console.error('Error getting indexes:', error);
     res.status(500).json({ error: error.message });
   }
 });
+
 
 // Find one and update
 app.post('/findOneAndUpdate', async (req, res) => {
@@ -485,12 +493,14 @@ app.post('/drop', async (req, res) => {
 app.get('/listCollections', async (req, res) => {
   try {
     const collections = await db.listCollections().toArray();
-    res.json(collections);
+    const names = collections.map(col => ({ name: col.name }));
+    res.json(names);
   } catch (error) {
     console.error('Error listing collections:', error);
     res.status(500).json({ error: error.message });
   }
 });
+
 
 // Start the server
 async function startServer() {

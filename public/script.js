@@ -1027,81 +1027,87 @@ document.getElementById('createIndexForm').addEventListener('submit', async (e) 
     }
   });
 
-  // GET INDEXES
   const listIndexesForm = document.getElementById('listIndexesForm');
-  const resultBox = document.getElementById('listIndexesResult');
+const resultBox = document.getElementById('listIndexesResult');
 
-  if (listIndexesForm && resultBox) {
-    listIndexesForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
+if (listIndexesForm && resultBox) {
+  listIndexesForm.addEventListener('submit', async (e) => {
+    e.preventDefault();
 
-      resultBox.innerHTML = 'Loading...';
+    const collectionName = document.getElementById('indexCollection').value.trim();
+    if (!collectionName) {
+      resultBox.innerText = "Please enter a collection name.";
+      return;
+    }
 
-      try {
-        const response = await fetch(`${API_URL}/getIndexes`);
-        const result = await response.json();
+    resultBox.innerHTML = 'Loading...';
 
-        if (response.ok) {
-          resultBox.innerHTML = `
-            <pre>${JSON.stringify(result, null, 2)}</pre>
-          `;
-        } else {
-          resultBox.innerText = `Error: ${result.error}`;
-        }
-      } catch (err) {
-        resultBox.innerText = `Error: ${err.message}`;
+    try {
+      const response = await fetch(`${API_URL}/getIndexes?collectionName=${encodeURIComponent(collectionName)}`);
+      const result = await response.json();
+
+      if (response.ok) {
+        resultBox.innerHTML = `
+          <pre>${JSON.stringify(result, null, 2)}</pre>
+        `;
+      } else {
+        resultBox.innerText = `Error: ${result.error}`;
+      }
+    } catch (err) {
+      resultBox.innerText = `Error: ${err.message}`;
+    }
+  });
+} else {
+  console.error('listIndexesForm or listIndexesResult element is missing in the DOM.');
+}
+
+  //aggregate
+  const runAggregationBtn = document.getElementById('runAggregationBtn');
+if (runAggregationBtn) {
+  runAggregationBtn.addEventListener('click', async () => {
+    const pipelineInput = document.getElementById('pipeline').value.trim();
+    const resultBox = document.getElementById('aggregation-result');
+
+    // Hide all other result boxes
+    document.querySelectorAll('.result-box').forEach(box => {
+      if (box !== resultBox) {
+        box.classList.remove('show');
+        box.innerHTML = ''; // Clear content
       }
     });
-  } else {
-    console.error('listIndexesForm or listIndexesResult element is missing in the DOM.');
-  }
-  //aggregate
-  const aggregateForm = document.getElementById('aggregateForm');
-  if (aggregateForm) {
-    aggregateForm.addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const pipeline = document.getElementById('aggregatePipeline').value.trim();
-      const resultBox = document.getElementById('aggregateResult');
-      
-      // Hide all other result boxes
-      document.querySelectorAll('.result-box').forEach(box => {
-        if (box !== resultBox) {
-          box.classList.remove('show');
-          box.innerHTML = ''; // Clear content
-        }
+
+    if (!pipelineInput) {
+      resultBox.innerText = "Please enter a valid aggregation pipeline.";
+      resultBox.classList.add('show');
+      return;
+    }
+
+    try {
+      const response = await fetch(`${API_URL}/aggregate`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ pipeline: JSON.parse(pipelineInput) })
       });
 
-      if (!pipeline) {
-        resultBox.innerText = "Please enter a valid aggregation pipeline.";
-        resultBox.classList.add('show');
-        return;
+      const result = await response.json();
+      if (response.ok) {
+        resultBox.innerHTML = `<pre>${JSON.stringify(result, null, 2)}</pre>`;
+      } else {
+        resultBox.innerText = `Error: ${result.error}`;
       }
-      try {
-        const response = await fetch(`${API_URL}/aggregate`, {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ pipeline: JSON.parse(pipeline) })
-        });
-        const result = await response.json();
-        if (response.ok) {
-          resultBox.innerHTML = `
-            <pre>${JSON.stringify(result, null, 2)}</pre>
-          `;
-        } else {
-          resultBox.innerText = `Error: ${result.error}`;
-        }
-        resultBox.classList.add('show');
-      } catch (err) {
-        resultBox.innerText = `Error: ${err.message}`;
-        resultBox.classList.add('show');
-      }
-    });
-  }
+      resultBox.classList.add('show');
+    } catch (err) {
+      resultBox.innerText = `Error: ${err.message}`;
+      resultBox.classList.add('show');
+    }
+  });
+}
+
 
   // List Collections
-  document.getElementById('listCollectionsForm').addEventListener('submit', async (e) => {
+ document.getElementById('listCollectionsForm').addEventListener('submit', async (e) => {
     e.preventDefault();
     const resultDiv = document.getElementById('listCollectionsResult');
     resultDiv.innerHTML = 'Loading...';
@@ -1123,7 +1129,6 @@ document.getElementById('createIndexForm').addEventListener('submit', async (e) 
       resultDiv.innerHTML = `Fetch Error: ${err.message}`;
     }
   });
-
   // Drop Collection
   document.getElementById('dropCollectionForm').addEventListener('submit', async (e) => {
     e.preventDefault();
